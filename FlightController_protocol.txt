@@ -1,39 +1,42 @@
+разрабатываем протокол обмена нашего джойстика с внешним миром через UART
 
 1 Аналоговые переменные
 2 кнопки джойстика
 3 кнопки клавиатуры
 4 сдвиговые кнопки
-5 движ мыши
-6 кнопки мыши
+5 движ мыши  ( не уверен)
+6 кнопки мыши( не уверен)
 
-1 Аналоговые оси
+1) Аналоговые оси
+
+8 осей
+x,y,z, rx, ry, rz, t, r
+| | |   |   |   |  | |
+a,b,c,  d,  e,  f, g, h
+название оскаждой оси будет соответствовать определенная буква
+
+int (16) параметр 0-65535
 
 S- setup установочный максимальный параметр для оси 
 Sd512 - максимальное значение у оси rx = 512
 
 A-аналог
+Ab1023   - joystick axis y = 1023,
+Аe2056   - joystick axis ry= 2056,
 
-8 осей
-x,y,z, rx, ry, rz, t, r
-a,b,c,  d,  e,  f, g, h
+2) кнопки джойстика
 
-int (16) параметр 0-65535
+Jpx  joystick press button x
+Jrx  joystick release button x
 
-Ab1023   - аналог ось y = 1023,
-Аe2056   - аналог ось ry= 2056,
+//Ju0   joystick button 0 up
+//Jd1   joystick button 1 down
+"Jr4"   joystick button 4 release
+"Jp5"   joystick button 5 press
 
-2 кнопки джойстика
-Jd0
-Ju0
-Jp0
-Jr0
+3) кнопки клавииатуры
+для работы клавиатуры понадобится подключить стандартную библиотеку  #include <Keyboard.h>
 
-Ju0   joystick button 0 up
-Jd1   joystick button 1 down
-Jr4   joystick button 4 release
-Jp5   joystick button 5 press
-
-3 кнопки клавииатуры
 Kd	keyboard down
 Ku	keyboard up
 Kp	keyboard press
@@ -51,7 +54,7 @@ Mc	keyboard press ctrl
 
 Mc+Kp"a"+Ka  = ctrl+a
 
-
+но это не точно
 
 5 движ мыши
 
@@ -60,7 +63,6 @@ Mc+Kp"a"+Ka  = ctrl+a
 
 
 Определения Леонардо для клавиш-модификаторов перечислены ниже:
-
 Ключ	Шестнадцатеричное значение	Десятичное значение
 KEY_LEFT_CTRL	0x80	128
 KEY_LEFT_SHIFT	0x81	129
