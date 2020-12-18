@@ -16,6 +16,9 @@ a,b,c,  d,  e,  f, g,  h
 название каждой оси будет соответствовать определенная буква
 значение оси передается как положительное число от 0 до максимального,
 установленного параметром S для каждой оси отдельно
+Желательно те оси которые изменяются через UART,не использовать в головном контроллере.
+например, если основной джойстик исользуем X,Y,Z,S1, то через UART изменяем напрямую оси rX,rY,rZ,S2.
+Так мы избежим конфликтов .
 
 int (16) value параметр 0-65535
 
@@ -50,6 +53,108 @@ A-аналог
  
   Joystick.setXAxis( x); - устанавливаем оси Х джойстика значение x.
   
+ Реализация алгоритма на языке ардуино:
+
+создаем массив UARTaxis [8] из 8 элементов ,в нем мы будем хранить данные для каждой оси которые будем принимать из  UART
+  int UARTaxis  [8]= {0,0,0,0,0,0,0,0};
+  int UARTaxiss  [8]= {1023,1023,1023,1023,1023,1023,1023,1023};
+второй массив, это массив максимальных значений для каждой оси по умолчанию. изменить их можно  S командой принятой из UART
+для любой оси. 
+так как за единицу времени через UART изменяется только одна ось,введем переменную которая будет содержать цифровой 
+индекс измененной оси.если он отличен от нуля,значит по UART произошло изменение по одной из осей и это надо отработать.
+мы используем Serial а не Serial1 , так как это будет удобно для тестирования с терминала компьютера. в окончательной 
+версии естественно надо будет заменить Serial на Serial1 . 
+    incomingByte = Serial.read();
+  if(incomingByte =='A')
+  {
+incomingByte = Serial.read();
+Serial.write(incomingByte);
+  switch (incomingByte)
+  {
+    case  'a':  
+    UARTaxis  [0]= Serial.parseInt();
+    UARTindex=1;
+    break;
+    case  'b':
+    UARTaxis  [1]=Serial.parseInt();
+     UARTindex=2;
+    break;
+    case  'c':
+    UARTaxis  [2]=Serial.parseInt();
+     UARTindex=3;
+    break;
+    case  'd':
+    UARTaxis  [3]=Serial.parseInt();
+     UARTindex=4;
+    break;
+    case  'e':
+    UARTaxis  [4]=Serial.parseInt();
+     UARTindex=5;
+    break;
+    case  'f':
+    UARTaxis  [5]=Serial.parseInt();  
+     UARTindex=6;
+    break;
+    case  'g':
+    UARTaxis  [6]=Serial.parseInt();  
+     UARTindex=7;
+    break;     
+    case  'h':
+    UARTaxis  [7]=Serial.parseInt();
+     UARTindex=8;
+    break;     
+    
+    default:
+    UARTindex=0;
+    break;
+    }
+  }
+ 
+на выходе имеем в одном из элементов массива UARTaxis[8] принятое значение для оси ,
+а (UARTindex-1) содержит индекс элемента в массиве UARTaxis .
+
+
+для приема и обработки команды S примерно так же поступаем.
+
+  if(incomingByte =='S')
+  {
+incomingByte = Serial.read();
+Serial.write(incomingByte);
+  switch (incomingByte)
+  {
+    case  'a':  
+    UARTaxiss  [0]= Serial.parseInt();
+    break;
+    case  'b':
+    UARTaxiss  [1]=Serial.parseInt();
+    break;
+    case  'c':
+    UARTaxiss  [2]=Serial.parseInt();
+    break;
+    case  'd':
+    UARTaxiss  [3]=Serial.parseInt();
+    break;
+    case  'e':
+    UARTaxiss  [4]=Serial.parseInt();
+    break;
+    case  'f':
+    UARTaxiss  [5]=Serial.parseInt();  
+    break;
+    case  'g':
+    UARTaxiss  [6]=Serial.parseInt();  
+    break;     
+    case  'h':
+    UARTaxiss  [7]=Serial.parseInt();
+    break;     
+    default:
+    break;
+    }
+  }
+
+
+
+
+  
 2) кнопки джойстика
 
 Jpx  joystick press button x
@@ -59,6 +164,37 @@ Jrx  joystick release button x
 //Jd1   joystick button 1 down
 "Jr4"   joystick button 4 release
 "Jp5"   joystick button 5 press
+
+
+для кнопок джойстика так-же
+
+ if(incomingByte =='J')
+  {
+incomingByte = Serial.read();
+Serial.write(incomingByte);
+  switch (incomingByte)
+  {
+//   case  'd':  
+//   Joystick.setButton(Serial.parseInt(),1);
+//   break;
+//   case  'u':
+//   Joystick.setButton(Serial.parseInt(),0);
+//   break;
+    case  'r':
+   	Joystick.releaseButton(Serial.parseInt());
+    break;
+    case  'p':
+    Joystick.pressButton(Serial.parseInt());
+    break;
+    default:
+    break;
+    }
+  
+  }  
+в принципе, пока достаточно двух команд, нажатие и отпускание
+
+
+
 
 3) кнопки клавииатуры
 для работы клавиатуры понадобится подключить 
@@ -82,6 +218,9 @@ Mc	keyboard press ctrl
 Mc+Kp"a"+Ka  = ctrl+a
 
 но это не точно
+
+вот тут пока выходит загвоздка, какой вариант нажатия выбрать?
+пока нерешил,перебираю варианты.
 
 5) движ мыши
 
