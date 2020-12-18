@@ -33,13 +33,13 @@ true // Slider 2
 
 );
 
-Joystick.setSlider1Range(min, max);
+Joystick.setSlider1Range(int16_t minimum, int16_t maximum);
 
-Joystick.setSlider2Range(min, max);
+Joystick.setSlider2Range(int16_t minimum, int16_t maximum);
 
-Joystick.setSlider1( value );
+Joystick.setSlider1(int16_t value);
 
-Joystick.setSlider2( value);
+Joystick.setSlider2(int16_t value);
 
 
 -----------------------------------------------------------------------
