@@ -42,3 +42,28 @@ Joystick.setSlider1( value );
 Joystick.setSlider2( value);
 
 
+-----------------------------------------------------------------------
+all commands below fully removed from original libraty
+
+Joystick.setRudderRange(int16_t minimum, int16_t maximum)
+
+Joystick.setRudder(int16_t value)
+
+Joystick.setThrottleRange(int16_t minimum, int16_t maximum)
+
+Joystick.setThrottle(int16_t value)
+
+Joystick.setAcceleratorRange(int16_t minimum, int16_t maximum)
+
+Joystick.setAccelerator(int16_t value)
+
+Joystick.setBrakeRange(int16_t minimum, int16_t maximum)
+
+Joystick.setBrake(int16_t value)
+
+Sets the Brake value. See setBrakeRange for the range.
+
+Joystick.setSteeringRange(int16_t minimum, int16_t maximum)
+
+Joystick.setSteering(int16_t value)
+
