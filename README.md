@@ -1,8 +1,13 @@
 # Arduino_Joystick_Keyboard_UARTengine
-собирательный проект джойстика на Arduino 32u4, 8 осей ,128 кнопок, с возможностью подключения к джойстику по UART (через блютуз модуль с телефона или другого устройства)  
 
+support Arduino Leonardo, ProMicro boards, based on atmega 32u4 chip.
+ conversion https://github.com/MHeironimus/ArduinoJoystickLibrary  for windows 10 pro.
+remove all simulation from original and add two Axes slider to Axes HID descriptor.
+new init and command above.
+собирательный проект джойстика на Arduino 32u4, 8 осей ,128 кнопок, 
+с возможностью подключения к джойстику по UART (через блютуз модуль с телефона или другого устройства)  
 базируется на https://github.com/MHeironimus/ArduinoJoystickLibrary , 
-но удалены все оси симуляций и добавлены две оси ползунки.
+но удалены все оси симуляций и добавлены две оси ползунков.
 Новое определение джойстка и новые команды выглядят так :
 
 Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,
