@@ -33,4 +33,4 @@ Joystick.setSlider2Range(min, max);
 
 Joystick.setSlider1( value );
 
-Joystick.setSlider2( vakue);
+Joystick.setSlider2( value);
