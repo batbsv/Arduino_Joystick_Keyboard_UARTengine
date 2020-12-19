@@ -21,8 +21,6 @@ a,b,c,  d,  e,  f, g,  h
 например, если основной джойстик исользуем X,Y,Z,S1, то через UART изменяем напрямую оси rX,rY,rZ,S2.
 Так мы избежим конфликтов .
 
-int (16) value параметр 0-65535
-
 "Sax"
 "Sbx"
 "Scx"
@@ -155,18 +153,14 @@ Serial.write(incomingByte);
     break;
     }
   }
-
-
-
-
-  
+    
 2) кнопки джойстика
 
 Jpx  joystick press button x
 Jrx  joystick release button x
 
-//Ju0   joystick button 0 up
-//Jd1   joystick button 1 down
+"Ju0"   joystick button 0 up
+"Jd1"   joystick button 1 down
 "Jr4"   joystick button 4 release
 "Jp5"   joystick button 5 press
 
@@ -179,12 +173,12 @@ incomingByte = Serial.read();
 Serial.write(incomingByte);
   switch (incomingByte)
   {
-//   case  'd':  
-//   Joystick.setButton(Serial.parseInt(),1);
-//   break;
-//   case  'u':
-//   Joystick.setButton(Serial.parseInt(),0);
-//   break;
+    case  'd':  
+   Joystick.setButton(Serial.parseInt(),1);
+   break;
+   case  'u':
+   Joystick.setButton(Serial.parseInt(),0);
+   break;
     case  'r':
    	Joystick.releaseButton(Serial.parseInt());
     break;
@@ -202,6 +196,7 @@ Serial.write(incomingByte);
 
 
 3) кнопки клавииатуры
+Внимание, если не отпустить кнопку, то она в системе останется нажатой !!!
 для работы клавиатуры понадобится подключить 
 стандартную библиотеку  #include <Keyboard.h>
 
