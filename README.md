@@ -48,7 +48,7 @@ Joystick.setSlider2(int16_t value);
 
 
 -----------------------------------------------------------------------
-all commands below fully removed from original libraty
+all commands below fully removed from original library
 
 Joystick.setRudderRange(int16_t minimum, int16_t maximum)
 
